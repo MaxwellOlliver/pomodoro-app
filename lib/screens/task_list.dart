@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pomodoro/widgets/custom_appbar.dart';
+import 'package:pomodoro/widgets/task_item.dart';
 
 class TaskList extends StatefulWidget {
   const TaskList({super.key});
@@ -15,42 +17,71 @@ class TaskListState extends State<TaskList> {
       appBar: CustomAppBar(),
       backgroundColor: const Color(0xFFF5F5F5),
       body: Padding(
-        padding: EdgeInsets.all(32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'My tasks',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF333333),
-              ),
-            ),
-            SizedBox(height: 16),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0xFF000000).withAlpha(10),
-                    blurRadius: 10,
+        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'My tasks',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF333333),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: FaIcon(FontAwesomeIcons.plus),
+                    color: Color(0xFF333333),
                   ),
                 ],
               ),
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    // do not check here cursor-ai
-                    // Icon(Icons.check_circle_outline, color: Color(0xFF333333)),
-                    Text('Add a new task'),
-                  ],
-                ),
-              ),
-            ),
-          ],
+              SizedBox(height: 14),
+              Column(
+                spacing: 14,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Today',
+                    style: TextStyle(
+                      color: Color.fromARGB(225, 95, 95, 95),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  TaskItem(),
+                  TaskItem(),
+                  TaskItem(),
+                  Text(
+                    'Yesterday',
+                    style: TextStyle(
+                      color: Color.fromARGB(225, 95, 95, 95),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  TaskItem(),
+                  TaskItem(),
+                  TaskItem(),
+                  Text(
+                    'Last week',
+                    style: TextStyle(
+                      color: Color.fromARGB(225, 95, 95, 95),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  TaskItem(),
+                  TaskItem(),
+                  TaskItem(),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

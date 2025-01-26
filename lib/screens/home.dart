@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -12,7 +14,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => HomeScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   static const focusTime = 25 * 60;
   static const breakTime = 5 * 60;
 
@@ -40,6 +42,12 @@ class HomeScreenState extends State<HomeScreen> {
       await _requestNotificationPermission();
       await _initializeNotifications();
     });
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 
   Future<void> _requestNotificationPermission() async {
@@ -90,13 +98,6 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _notificationsPlugin.cancelAll();
-    player.dispose();
-    super.dispose();
-  }
-
   Future<void> playAlarm() async {
     await player.resume();
   }
@@ -138,6 +139,7 @@ class HomeScreenState extends State<HomeScreen> {
       setState(() {
         isRunning = false;
       });
+
       _notificationsPlugin.cancel(0);
     }
   }
@@ -174,9 +176,41 @@ class HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('pomodoro.', style: TextStyle(fontWeight: FontWeight.w600)),
             Column(
-              spacing: 16,
+              children: [
+                const Text(
+                  'pomodoro.',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 32),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.white.withAlpha(50),
+                  ),
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 8,
+                    children: [
+                      FaIcon(
+                        FontAwesomeIcons.thumbtack,
+                        color: Colors.white,
+                        size: 16,
+                      ),
+                      const Text(
+                        'Create login page',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              spacing: 8,
               children: [
                 Text(
                   !isRunning
@@ -203,30 +237,24 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                   textAlign: TextAlign.center,
                 ),
+                Lottie.asset(
+                  'assets/lottie/clock.json',
+                  height: 150,
+                  repeat: true,
+                  animate: isRunning,
+                  frameRate: FrameRate(60),
+                ),
               ],
             ),
-            TextButton(
+            IconButton(
               onPressed: isRunning ? stopTimer : startTimer,
-              style: TextButton.styleFrom(
-                backgroundColor: const Color.fromARGB(58, 255, 255, 255),
-                padding: EdgeInsets.symmetric(horizontal: 44, vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
-                ),
-              ),
-              child: Text(
-                (isRunning
-                        ? 'Pause'
-                        : hasStarted
-                            ? 'Resume'
-                            : 'Start')
-                    .toUpperCase(),
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                    ),
-              ),
-            )
+              icon: isRunning
+                  ? FaIcon(FontAwesomeIcons.pause)
+                  : FaIcon(FontAwesomeIcons.play),
+              color: Colors.white,
+              iconSize: 48,
+              padding: EdgeInsets.all(16),
+            ),
           ],
         ),
       ),

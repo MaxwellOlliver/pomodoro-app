@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pomodoro/screens/home.dart';
 import 'package:pomodoro/screens/task_list.dart';
 
 void main() {
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 0, 47, 255),
+          seedColor: const Color.fromARGB(255, 179, 75, 240),
         ),
         useMaterial3: true,
         fontFamily: 'Poppins',
@@ -47,10 +48,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const TaskList(),
+      home: const HomeScreen(),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 119, 54, 194),
+          seedColor: const Color(0xFF7736C2),
         ),
         useMaterial3: true,
         fontFamily: 'Poppins',
