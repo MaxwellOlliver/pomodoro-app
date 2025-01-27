@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class TaskItem extends StatefulWidget {
   const TaskItem({

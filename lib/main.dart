@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pomodoro/screens/home.dart';
-import 'package:pomodoro/screens/task_list.dart';
 
 void main() {
   runApp(const MyApp());
